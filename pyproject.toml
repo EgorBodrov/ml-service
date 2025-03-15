@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "ml-service"
+version = "0.1.0"
+description = ""
+authors = ["Egor Bodrov <bodroff.e.a@gmail.com>"]
+packages = [{include = "ml"}]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[tool.poetry.group.ml.dependencies]
+scikit-learn = "^1.6.1"
+pandas = "^2.2.3"
+numpy = "^2.2.3"
+matplotlib = "^3.10.1"
+seaborn = "^0.13.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
