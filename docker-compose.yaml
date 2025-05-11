@@ -1,0 +1,51 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+    volumes:
+      - ./postgresql_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  worker:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.worker
+    container_name: rq_worker
+    command: python rq_worker.py
+    depends_on:
+      - redis
+
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.app
+    container_name: ml_service
+    depends_on:
+      - worker
+
+  streamlit:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.streamlit
+    container_name: streamlit
+    command: streamlit run main.py
+    ports:
+      - "8501:8501"
+    depends_on:
+      - app
+
+volumes:
+  postgres_data:
