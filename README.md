@@ -13,3 +13,21 @@
 `sklearn.ensemble.RandomForestRegressor`
 
 
+## Установка
+
+**Создание окружения**
+
+```shell
+conda create -n <name_of_venv> python=3.12 -y
+conda activate <name_of_venv>
+```
+
+**Установка пакетного менеджера poetry (версия 1.8.4)**
+```shell
+pip install poetry==1.8.4
+```
+
+**Установка зависимостей и пакетов**
+```shell
+poetry install --all-extras
+```
